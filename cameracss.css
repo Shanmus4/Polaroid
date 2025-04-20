@@ -5,22 +5,41 @@
 }
 
 .camera {
-  display: block;
-  width: 570px;
-  height: 470px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 100px;
-  margin-top: calc(50vh - 235px);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 570/470;
+  margin: 0 auto;
   position: relative;
+  max-width: 570px;
+  max-height: 100%;
+}
+
+.camera .top {
+  flex: 68 0 0%;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+  border-radius: 35px 35px 0 0;
+  background-image: linear-gradient(
+      90deg,
+      rgba(243, 243, 243, 0.75),
+      rgba(243, 243, 243, 0) 15% 85%,
+      rgba(243, 243, 243, 0.75)
+    ),
+    linear-gradient(#fefefe, #f9f7f8),
+    linear-gradient(#ddd9da, #e2dedf, #eae8eb, #f3f1f4);
+  background-size: 100%, 100% 3px, 100%;
+  background-repeat: no-repeat;
+  box-shadow: -1px 1px 2px 3px rgba(249, 247, 248, 0.85) inset;
 }
 
 .camera .bottom {
-  display: block;
+  flex: 32 0 0%;
   width: 100%;
-  height: 165px;
-  position: absolute;
-  bottom: 0;
+  min-height: 0;
+  position: relative;
   border-radius: 11px 11px 30px 30px;
   background-image: radial-gradient(#e1dfe2 60%, transparent 60%),
     radial-gradient(#e1dfe2 60%, transparent 60%),
@@ -137,27 +156,6 @@
   border-radius: 10px;
   border: 0.5px solid rgba(133, 129, 128, 0.15);
   box-shadow: -1px 5px 5px #181619;
-}
-
-.camera .top {
-  display: block;
-  position: relative;
-  width: 540px;
-  height: 320px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 35px 35px 0 0;
-  background-image: linear-gradient(
-      90deg,
-      rgba(243, 243, 243, 0.75),
-      rgba(243, 243, 243, 0) 15% 85%,
-      rgba(243, 243, 243, 0.75)
-    ),
-    linear-gradient(#fefefe, #f9f7f8),
-    linear-gradient(#ddd9da, #e2dedf, #eae8eb, #f3f1f4);
-  background-size: 100%, 100% 3px, 100%;
-  background-repeat: no-repeat;
-  box-shadow: -1px 1px 2px 3px rgba(249, 247, 248, 0.85) inset;
 }
 
 .camera .top .lens {

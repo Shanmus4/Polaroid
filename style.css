@@ -1,27 +1,81 @@
 body {
   background-color: rgb(194, 245, 255);
-  display: flex; /* Use flexbox for layout */
-  height: 100vh; /* Full viewport height */
-  overflow: hidden; /* Prevent scrolling */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  align-items: stretch;
+  justify-content: stretch;
 }
 
 #camera-view-container {
-  width: 60%; /* Take up 60% of the width */
-  height: 100%; /* Take up full height */
-  background-color: rgb(194, 245, 255); /* Light grey background */
+  flex: 0 0 40vh;
+  height: 40vh;
+  width: 100vw;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background: rgb(194, 245, 255);
+}
+
+.camera-parent {
+  flex: 0 0 60vh;
+  height: 30vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.camera {
+  width: 80%;
+  height: auto;
+  aspect-ratio: 570/470;
+  max-width: 570px;
+  max-height: 100%;
+  margin: 0 auto !important;
+  position: relative !important;
+  box-sizing: border-box;
+  overflow: visible;
+  /* Remove transform for true responsive scaling */
 }
 
 #camera-view {
   width: 80%;
   height: 80%;
   border: 2px solid #ccc;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /* You can add Polaroid filter styles here later */
 #camera-view.polaroid-filter {
   /* Add Polaroid filter styles here later */
   filter: sepia(50%) contrast(1.2) brightness(1.1) grayscale(20%);
+}
+
+@media (max-width: 700px) {
+  .camera {
+    /* Prevent squish and preserve aspect on mobile */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    width: 570px;
+    height: 470px;
+    min-width: 0;
+    min-height: 0;
+    position: absolute !important;
+  }
+  .camera-parent {
+    position: relative;
+    min-height: 0;
+    min-width: 0;
+    overflow: visible;
+    display: block;
+  }
 }
