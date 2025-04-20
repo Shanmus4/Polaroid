@@ -13,48 +13,50 @@
   </head>  
   <body>
     <div class="main-flex-layout">
-      <div class="camera-parent">
-        <div class="camera-scale-wrapper">
-          <div class="camera" aria-label="Photorealistic illustration of a Polaroid camera">
-            <div class="top">
-              <div class="flash"></div>
-              <div class="timer"></div>
-              <div class="sensor"></div>
-              <div class="lens"><div class="glass"></div></div>
-              <div class="shutter"></div>
-              <div class="viewfinder"><div class="glass"><div class="back"></div></div></div>
-              <div class="toggle-container"><div class="toggle"></div></div>
-              <div class="power"></div>
-              <div class="title"></div>
-            </div>
-            <div class="bottom">
-              <div class="toggle-container"><div class="toggle"><div class="handle"></div></div></div>
-              <div class="printer">
+      <div class="camera-polaroid-stack">
+        <div class="camera-parent">
+          <div class="camera-scale-wrapper">
+            <div class="camera" aria-label="Photorealistic illustration of a Polaroid camera">
+              <div class="top">
+                <div class="flash"></div>
+                <div class="timer"></div>
+                <div class="sensor"></div>
+                <div class="lens"><div class="glass"></div></div>
+                <div class="shutter"></div>
+                <div class="viewfinder"><div class="glass"><div class="back"></div></div></div>
+                <div class="toggle-container"><div class="toggle"></div></div>
+                <div class="power"></div>
+                <div class="title"></div>
               </div>
-              <div class="labels">
-                <div class="rainbow"></div>
-                <div class="logo">Polaroid</div>
-                <div class="type"></div>
+              <div class="bottom">
+                <div class="toggle-container"><div class="toggle"><div class="handle"></div></div></div>
+                <div class="printer">
+                </div>
+                <div class="labels">
+                  <div class="rainbow"></div>
+                  <div class="logo">Polaroid</div>
+                  <div class="type"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="polaroid-parent">
-        <button class="polaroid-arrow polaroid-arrow-left" tabindex="0" aria-label="Previous filter" type="button">
-          <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
-        </button>
-        <div class="polaroid-preview-container">
-          <div class="polaroid-white" id="polaroid-capture-area">
-            <video id="camera-view" autoplay playsinline></video>
+        <div class="polaroid-parent">
+          <button class="polaroid-arrow polaroid-arrow-left" tabindex="0" aria-label="Previous filter" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+          </button>
+          <div class="polaroid-preview-container">
+            <div class="polaroid-white" id="polaroid-capture-area">
+              <video id="camera-view" autoplay playsinline></video>
+            </div>
           </div>
+          <button class="polaroid-arrow polaroid-arrow-right" tabindex="0" aria-label="Next filter" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
+          <button id="fab-download" aria-label="Download captured Polaroid" class="fab-download" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          </button>
         </div>
-        <button class="polaroid-arrow polaroid-arrow-right" tabindex="0" aria-label="Next filter" type="button">
-          <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-        </button>
-        <button id="fab-download" aria-label="Download captured Polaroid" class="fab-download" type="button">
-          <span class="material-symbols-outlined" aria-hidden="true">download</span>
-        </button>
       </div>
     </div>
 

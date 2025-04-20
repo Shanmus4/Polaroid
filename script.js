@@ -82,15 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return dataUrl;
   }
 
-  function scaleCameraToHeight() {
-    const camera = document.querySelector('.camera');
+  function scaleCameraToFit() {
     const wrapper = document.querySelector('.camera-scale-wrapper');
-    if (!camera || !wrapper) return;
-    // The camera's natural height (e.g., 470px)
-    const naturalHeight = 470;
     const parent = document.querySelector('.camera-parent');
-    const available = parent.clientHeight;
-    const scale = Math.min(available / naturalHeight, 1); // Never scale above 1
+    const naturalWidth = 570;
+    const naturalHeight = 470;
+    const availableHeight = parent.clientHeight;
+    const availableWidth = parent.clientWidth;
+    const scaleH = availableHeight / naturalHeight;
+    const scaleW = availableWidth / naturalWidth;
+    const scale = Math.min(scaleH, scaleW, 1); // Never scale above 1
     wrapper.style.transform = `scale(${scale})`;
   }
 
@@ -165,6 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateFilter();
-  scaleCameraToHeight();
-  window.addEventListener('resize', scaleCameraToHeight);
+  scaleCameraToFit();
+  window.addEventListener('resize', scaleCameraToFit);
 });
