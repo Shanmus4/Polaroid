@@ -9,7 +9,6 @@
   flex-direction: column;
   width: 100%;
   height: auto;
-  aspect-ratio: 570/470;
   margin: 0 auto;
   position: relative;
   max-width: 570px;
@@ -17,8 +16,7 @@
 }
 
 .camera .top {
-  flex: 68 0 0%;
-  width: 100%;
+  height: 68%;
   min-height: 0;
   position: relative;
   border-radius: 35px 35px 0 0;
@@ -36,11 +34,10 @@
 }
 
 .camera .bottom {
-  flex: 32 0 0%;
-  width: 100%;
+  height: 32%;
   min-height: 0;
   position: relative;
-  border-radius: 11px 11px 30px 30px;
+  border-radius: 0px 0px 30px 30px;
   background-image: radial-gradient(#e1dfe2 60%, transparent 60%),
     radial-gradient(#e1dfe2 60%, transparent 60%),
     linear-gradient(90deg, #e1dfe2, #eae8eb),
@@ -474,5 +471,5 @@
   top: 1px;
   background-image: radial-gradient(#fbc00a, #ffdb09);
   box-shadow: 0.5px 1px 0.75px 0.25px #ffed71 inset,
-    0px -0.5px 0.5px 0.5px #e6a11f inset, -1px 0.5px 4px 1px #964900;
+    0px -0.5px 0.5px 0.5px #464544 inset, -1px 0.5px 4px 1px #964900;
 }

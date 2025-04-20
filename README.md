@@ -1,44 +1,40 @@
-# Interactive Polaroid Camera Simulation
+# Polaroid Camera Web App
 
-This project is a web-based simulation of a classic Polaroid camera, built using HTML, CSS, and vanilla JavaScript. It aims for a visually appealing, photorealistic look with simple, satisfying interactions.
+A responsive, visually-accurate Polaroid camera web UI with real-time camera preview and true-to-life Polaroid photo proportions.
 
 ## Features
--   Detailed visual representation of a Polaroid camera using CSS gradients and shadows.
--   Live camera view with Polaroid filter toggle.
+- Fully responsive camera layout that scales smoothly on all screen sizes
+- Camera design remains visually stable and proportionally correct—no element shuffling or squishing
+- Real-world Polaroid preview (3.6in x 4.5in white, 3.3in x 3.8in preview)
+- Clean, modern CSS using only width, aspect-ratio, and percent-based sizing
+- Mobile-optimized: camera and preview scale down together
+- Simple, maintainable HTML and CSS structure
 
-## Getting Started
-1.  Clone this repository (or download the files).
-2.  Open the `index.html` file in your web browser.
+## How It Works
+- The camera and preview use only width and aspect-ratio for scaling; no flexbox or transform scaling is used for responsiveness
+- All internal elements use percent-based sizing for perfect proportionality
+- The Polaroid preview is centered in its parent container using flexbox
+- Layout is controlled by `.camera-parent` (camera area) and `.polaroid-parent` (preview area)
 
-You may need to grant permission for the website to access your camera.
+## File Structure
+- `index.html`: Main HTML structure
+- `style.css`: Layout, scaling, and Polaroid preview styles
+- `cameracss.css`: Camera component and internal element styles
+- `script.js`: Camera access and preview logic
+- `TASK.md`: Task tracking and project history
+- `PLANNING.md`: (If present) Design and architecture notes
 
-## Project Structure
--   `index.html`: Contains the HTML structure of the camera and camera view.
--   `cameracss.css`: Defines the visual appearance and layout of the Polaroid camera.
--   `style.css`: Defines the layout of the page and the Polaroid filter.
--   `preview-enhanced.css`: Defines the enhanced camera preview and filter button styles.
--   `script.js`: Handles user interactions and camera access.
--   `PLANNING.md`: Outlines the project goals, architecture, and conventions.
--   `TASK.md`: Tracks completed, current, and future tasks.
+## Setup
+1. Open `index.html` in your browser
+2. Allow camera access for real-time preview
 
-## Changelog
-### [2025-04-20] Camera UI Layout & Scaling Overhaul
-- Camera is now wrapped in a `.camera-parent` div that takes up 50% of the viewport height.
-- The camera design is perfectly centered and scaled down to 0.5x for a balanced, responsive look.
-- The layout is now top-down: camera on top, live preview below, both centered.
-- All changes are in `index.html` and `style.css` (no changes to `cameracss.css`).
+## TODO / Roadmap
+- Add interactive features (e.g., capture, filter effects)
+- Improve accessibility and add tests
 
-### [2025-04-20] Enhanced Camera Preview UI
-- Camera preview on the right redesigned: borders removed, corners more rounded, soft ambient shadow added.
-- Filter button is now visually enhanced with gradient, icon, and click animation.
-- All new styles are in `preview-enhanced.css` (no changes to cameracss.css).
+---
 
-### [2025-04-20] Live Filter Selector
-- Camera preview now scales perfectly to fill the preview container.
-- The filter button has been replaced by a set of 5 round live filter selectors below the preview.
-- Each filter selector shows a live mini-preview of the camera with a different filter.
-- Clicking a selector updates the main preview in real time.
-- All new styles and logic are in `preview-enhanced.css` and updated JS.
+For more details, see `TASK.md` and `PLANNING.md`.
 
 ## GitHub Repository
 

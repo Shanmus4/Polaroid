@@ -1,56 +1,76 @@
 body {
   background-color: rgb(194, 245, 255);
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-  align-items: stretch;
-  justify-content: stretch;
 }
 
-#camera-view-container {
-  flex: 0 0 40vh;
-  height: 40vh;
+.main-flex-layout {
   width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgb(194, 245, 255);
+  min-height: 100vh;
 }
+
 
 .camera-parent {
-  flex: 0 0 60vh;
-  height: 30vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 58vh;
   position: relative;
-  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+  overflow: visible;
+  display: block;
+  padding: 20px;
 }
 
 .camera {
-  width: 80%;
-  height: auto;
-  aspect-ratio: 570/470;
-  max-width: 570px;
-  max-height: 100%;
-  margin: 0 auto !important;
-  position: relative !important;
+ /* Prevent squish and preserve aspect on mobile */
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%, -50%) scale(0.7);
+ width: 570px;
+ height: 470px;
+ min-width: 0;
+ min-height: 0;
+ position: absolute !important;
+}
+
+.polaroid-parent {
+  height: 42vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polaroid-preview-container {
+  margin: 0 auto;
+  /* New Outer size: 3.6in x 4.5in (259.2px x 324px at 72dpi) */
+  width: 259.2px;
+  height: 324px;
+}
+
+.polaroid-white {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  width: 259.2px;
+  height: 324px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10.8px 10.8px 0 10.8px; /* Keep 0.15in = 10.8px at 72dpi */
   box-sizing: border-box;
-  overflow: visible;
-  /* Remove transform for true responsive scaling */
+  transform: scale(0.9);
 }
 
 #camera-view {
-  width: 80%;
-  height: 80%;
-  border: 2px solid #ccc;
-  max-width: 100%;
-  max-height: 100%;
+  width: 237.6px; /* 3.3in at 72dpi */
+  height: 273.6px; /* 3.8in at 72dpi */
+  object-fit: cover;
+  border-radius: 4px;
+  background: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: none;
 }
 
 /* You can add Polaroid filter styles here later */

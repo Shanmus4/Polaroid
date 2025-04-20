@@ -19,16 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('getUserMedia() not supported.');
   }
 
-  // Polaroid filter toggle
-  const filterButton = document.createElement('button');
-  filterButton.textContent = 'Toggle Polaroid Filter';
-  filterButton.style.marginTop = '10px'; // Add some spacing
-  cameraViewContainer.appendChild(filterButton);
-
-  filterButton.addEventListener('click', () => {
-    cameraView.classList.toggle('polaroid-filter');
-  });
-
   if (shutterButton) {
     shutterButton.addEventListener('click', () => {
       console.log('Shutter clicked!');
