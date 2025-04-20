@@ -1,0 +1,27 @@
+body {
+  background-color: rgb(194, 245, 255);
+  display: flex; /* Use flexbox for layout */
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+#camera-view-container {
+  width: 60%; /* Take up 60% of the width */
+  height: 100%; /* Take up full height */
+  background-color: rgb(194, 245, 255); /* Light grey background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#camera-view {
+  width: 80%;
+  height: 80%;
+  border: 2px solid #ccc;
+}
+
+/* You can add Polaroid filter styles here later */
+#camera-view.polaroid-filter {
+  /* Add Polaroid filter styles here later */
+  filter: sepia(50%) contrast(1.2) brightness(1.1) grayscale(20%);
+}

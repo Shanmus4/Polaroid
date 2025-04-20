@@ -1,0 +1,14 @@
+# Sensitive and config files
+.windsurfrules
+*.env
+*.key
+*.secret
+# Node, Python, and OS junk
+node_modules/
+__pycache__/
+.DS_Store
+Thumbs.db
+# API keys or secrets (if any are added later)
+api_keys.json
+*.pem
+*.crt
