@@ -40,10 +40,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .polaroid-preview-container {
-  margin: 0 auto;
+  margin: 0 8px;
   /* New Outer size: 3.6in x 4.5in (259.2px x 324px at 72dpi) */
   width: 259.2px;
   height: 324px;
@@ -77,6 +78,85 @@ body {
 #camera-view.polaroid-filter {
   /* Add Polaroid filter styles here later */
   filter: sepia(50%) contrast(1.2) brightness(1.1) grayscale(20%);
+}
+
+.polaroid-arrow {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(145deg, #fff 60%, #e6e6e6);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s, transform 0.1s, filter 0.2s;
+  margin: 0;
+  font-size: 0;
+  border: none;
+  position: relative;
+  z-index: 2;
+  outline: none;
+  padding: 0;
+  filter: brightness(1);
+}
+.polaroid-arrow:hover, .polaroid-arrow:focus {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.21);
+  background: #e0f7fa;
+  outline: none;
+  transform: scale(1.07);
+  filter: brightness(1.15);
+}
+.polaroid-arrow-left {
+  margin-right: 0;
+}
+.polaroid-arrow-right {
+  margin-left: 0;
+}
+.polaroid-arrow:active {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.21);
+  background: #f0f0f0;
+  outline: none;
+  transform: scale(0.93);
+}
+
+.fab-download {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: #fff;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  z-index: 10;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s, transform 0.1s;
+  color: #1976d2;
+  outline: none;
+}
+.fab-download:hover, .fab-download:focus {
+  background: #f5f5f5;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  transform: scale(1.08);
+}
+.fab-download .material-symbols-outlined {
+  font-size: 32px;
+  color: #1976d2;
+  font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 28px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  color: #666;
+  user-select: none;
+  pointer-events: none;
 }
 
 @media (max-width: 700px) {

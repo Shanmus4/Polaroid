@@ -54,6 +54,16 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 - Selecting a filter updates the main preview instantly.
 - All enhancements are in `preview-enhanced.css` and JS.
 
+## Polaroid Capture & Download
+- When the camera shutter is clicked, the current polaroid (with white frame and filter) is captured using a canvas, matching the live preview exactly (including padding and filter).
+- Captured images are stored as PNG data URLs in localStorage for persistent access.
+- A floating action button (FAB) allows users to download the latest captured image. The FAB is styled per Material Design 3 and is always positioned 20px from the bottom right of the preview area.
+- The image quality is preserved using devicePixelRatio and CSS padding for correct placement—no more skew or stretch.
+
+## Filter Navigation
+- Left/right arrows use Material Symbols Outlined chevrons with tactile hover/focus effects.
+- All filter and capture controls are keyboard accessible.
+
 ## Version Control
 
 - The project is now tracked on GitHub at [Polaroid Camera](https://github.com/Shanmus4/Polaroid-Camera).

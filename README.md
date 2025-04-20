@@ -10,11 +10,24 @@ A responsive, visually-accurate Polaroid camera web UI with real-time camera pre
 - Mobile-optimized: camera and preview scale down together
 - Simple, maintainable HTML and CSS structure
 
+## New Features
+- Material Design filter navigation arrows with smooth interactivity.
+- Capture Polaroid: Click the camera shutter to save the current preview (with white border and filter) as a high-res PNG.
+- Download FAB: Floating action button for downloading the latest captured Polaroid, always visible and styled per Material Design 3.
+- Skew-free, high-quality image capture that matches the live preview exactly.
+
 ## How It Works
 - The camera and preview use only width and aspect-ratio for scaling; no flexbox or transform scaling is used for responsiveness
 - All internal elements use percent-based sizing for perfect proportionality
 - The Polaroid preview is centered in its parent container using flexbox
 - Layout is controlled by `.camera-parent` (camera area) and `.polaroid-parent` (preview area)
+
+## Usage
+1. Use the left/right arrows to change filters on the Polaroid preview.
+2. Click the red camera shutter button to capture the current photo (with frame and filter).
+3. Click the download FAB to save the latest captured Polaroid as a PNG.
+
+All controls are keyboard accessible. Images are stored in browser cache (localStorage) until downloaded.
 
 ## File Structure
 - `index.html`: Main HTML structure
@@ -29,7 +42,6 @@ A responsive, visually-accurate Polaroid camera web UI with real-time camera pre
 2. Allow camera access for real-time preview
 
 ## TODO / Roadmap
-- Add interactive features (e.g., capture, filter effects)
 - Improve accessibility and add tests
 
 ---

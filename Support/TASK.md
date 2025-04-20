@@ -20,6 +20,10 @@
 -   Implemented responsive mobile scaling for both the camera and Polaroid preview.
 -   Cleaned up and simplified all CSS, removing legacy flex and transform logic.
 -   All UI elements remain visually aligned and centered at all breakpoints.
+-   Added interactive, Material Design filter navigation arrows with hover/focus effects.
+-   Implemented Polaroid photo capture: clicking the camera shutter saves the current preview (with white frame and filter) as a PNG in browser storage.
+-   Added a floating action button (FAB) for downloading the latest captured Polaroid, styled per Material Design guidelines.
+-   Fixed skew/stretch and improved image quality for downloads: captured images now perfectly match the live preview and are high-resolution.
 
 ## Current Tasks
 *(None)*
