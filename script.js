@@ -430,6 +430,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Download helper: bake filter into download
   async function downloadImageWithFilter(imgObj, filename) {
+    // Platform detection
+    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    // If not iOS, just download the original dataUrl (already has filter and frame)
+    if (!isiOS) {
+      downloadImage(imgObj.dataUrl, filename);
+      return;
+    }
+    // On iOS, re-render and apply the filter if needed
     const img = new window.Image();
     img.crossOrigin = 'anonymous';
     img.src = imgObj.dataUrl;
