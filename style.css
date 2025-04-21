@@ -260,4 +260,4 @@ body.gallery-open .fab-download {
     right: 12px !important;
     bottom: max(12px, env(safe-area-inset-bottom, 12px)) !important;
   }
-}
+} 

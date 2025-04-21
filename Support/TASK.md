@@ -34,9 +34,11 @@
 -   **[2025-04-21]** All CSS and JS files updated and thoroughly tested for mobile and desktop.
 -   **[2025-04-21]** Start gallery feature: In-page modal gallery shows all captured polaroids from browser cache. Each image has individual download. Add "Download All" for ZIP. Modular, documented, and tested per project rules.
 -   **[2025-04-21 18:27]** Added camera flip button to polaroid preview. Button is visible only on mobile devices with both cameras, and always on iOS. Uses Material icon with translucent background. Fully tested and working on iPhone Chrome.
+-   **[2025-04-21 19:45]** Integrated CamanJS for advanced polaroid-style filters. Added 4 realistic film presets, live preview, and filter navigation. Filters applied to both preview and captured images. Fully integrated and ready for further custom presets.
+-   **[2025-04-21 19:56]** Gallery modal now updates immediately when a new image is captured. Arrow keys and buttons switch filters for preview/capture. CamanJS setup verified.
 
 ## Current Tasks
--   None (all major features complete as of 2025-04-21 18:10)
+-   None (all major features complete as of 2025-04-21 19:56)
 
 ## Future Tasks / Backlog
 -   Implement photo printing animation triggered by shutter click.
@@ -48,3 +50,4 @@
 ## Discovered During Work
 -   The original CSS was messed up, so it was reverted.
 -   No major blockers. All layout and scaling issues have been addressed.
+-   [2025-04-21 19:56] CamanJS file must be present and correct for all filter features to work. If filters do not apply, re-download caman.full.min.js from the official repo.

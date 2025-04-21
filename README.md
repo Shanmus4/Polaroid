@@ -24,9 +24,9 @@ A responsive, visually-accurate Polaroid camera web UI with real-time camera pre
 - Layout is controlled by `.camera-parent` (camera area) and `.polaroid-parent` (preview area)
 
 ## Usage
-1. Use the left/right arrows to change filters on the Polaroid preview.
-2. Click the red camera shutter button to capture the current photo (with frame and filter).
-3. Click the gallery FAB (bottom-right) for future gallery features (currently shows a stub alert).
+1. Use the left/right arrows or keyboard arrow keys to change filters on the Polaroid preview.
+2. Click the red camera shutter button to capture the current photo (with frame and filter). The image is saved to the gallery.
+3. Click the gallery FAB (bottom-right) to open the gallery modal and view/download your captured polaroids.
 
 All controls are keyboard accessible. Images are stored in browser cache (localStorage) until downloaded.
 
@@ -54,6 +54,9 @@ All controls are keyboard accessible. Images are stored in browser cache (localS
 - [x] Guarantee high-res, pixel-perfect polaroid capture (matches preview, includes border).
 - [x] Refactor layout for maintainability and modularity.
 - [x] Update documentation and planning files for all recent changes.
+- [x] Gallery modal now updates immediately when a new image is captured.
+- [x] Arrow keys (left/right) and arrow buttons now switch filters for live preview and capture.
+- [x] CamanJS library setup verified and required for all filter features.
 - [ ] Improve accessibility and add tests.
 
 ---
