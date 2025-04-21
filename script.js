@@ -28,6 +28,26 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       name: 'Vivid',
       css: 'saturate(1.7) brightness(1.12) contrast(1.22)'
+    },
+    {
+      name: 'Sharp',
+      css: ''
+    },
+    {
+      name: 'B&W',
+      css: ''
+    },
+    {
+      name: 'Night',
+      css: ''
+    },
+    {
+      name: 'Glow',
+      css: ''
+    },
+    {
+      name: 'Fade',
+      css: ''
     }
   ];
   let filterIndex = 0;
@@ -36,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
 
   function updateFilter() {
-    if (filters[filterIndex].css) {
-      cameraView.style.filter = filters[filterIndex].css;
-    } else {
-      cameraView.style.filter = '';
-    }
+    // Remove all filter-* classes
+    cameraView.classList.remove('filter-none', 'filter-warm', 'filter-cool', 'filter-retro', 'filter-vivid', 'filter-sharp', 'filter-bw', 'filter-night', 'filter-glow', 'filter-fade');
+    // Add the selected filter class
+    const classMap = ['filter-none', 'filter-warm', 'filter-cool', 'filter-retro', 'filter-vivid', 'filter-sharp', 'filter-bw', 'filter-night', 'filter-glow', 'filter-fade'];
+    cameraView.classList.add(classMap[filterIndex]);
     cameraView.setAttribute('aria-label', filters[filterIndex].name + ' filter');
   }
 
@@ -281,6 +301,20 @@ document.addEventListener('DOMContentLoaded', () => {
     flipBtn.addEventListener('click', flipCamera);
   }
 
+  // Keyboard support for switching filters (left/right arrows)
+  document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('gallery-open')) return; // Don't interfere when gallery is open
+    if (e.key === 'ArrowLeft') {
+      filterIndex = (filterIndex - 1 + filters.length) % filters.length;
+      updateFilter();
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+      filterIndex = (filterIndex + 1) % filters.length;
+      updateFilter();
+      e.preventDefault();
+    }
+  });
+
   // --- GALLERY LOGIC ---
   // Exported helpers for testability
   window.getGalleryImages = function getGalleryImages() {
@@ -386,30 +420,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function downloadAllImages() {
     const images = window.getGalleryImages();
     if (!images.length) return;
-    // Use JSZip for ZIP creation (inject if not present)
-    if (typeof JSZip === 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
-      script.onload = () => zipAndDownload(images);
-      document.body.appendChild(script);
-    } else {
-      zipAndDownload(images);
-    }
-  }
-  function zipAndDownload(images) {
-    const zip = new JSZip();
     images.forEach((img, i) => {
-      zip.file(`polaroid-${i+1}.png`, img.split(',')[1], {base64:true});
-    });
-    zip.generateAsync({type:'blob'}).then(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'polaroids.zip';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      document.body.removeChild(a);
+      downloadImage(img, `polaroid-${i+1}.png`);
     });
   }
   if (galleryDownloadAll) {

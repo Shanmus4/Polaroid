@@ -36,6 +36,10 @@
 -   **[2025-04-21 18:27]** Added camera flip button to polaroid preview. Button is visible only on mobile devices with both cameras, and always on iOS. Uses Material icon with translucent background. Fully tested and working on iPhone Chrome.
 -   **[2025-04-21 19:45]** Integrated CamanJS for advanced polaroid-style filters. Added 4 realistic film presets, live preview, and filter navigation. Filters applied to both preview and captured images. Fully integrated and ready for further custom presets.
 -   **[2025-04-21 19:56]** Gallery modal now updates immediately when a new image is captured. Arrow keys and buttons switch filters for preview/capture. CamanJS setup verified.
+-   **[2025-04-21 21:09]** Enhanced and expanded CSS filter system: 10 complex, visually rich polaroid filters (warm, cool, retro, vivid, sharp, B&W, night, glow, fade, none). All filter effects are now strictly confined to the image preview area—no leaks onto the frame or background.
+-   **[2025-04-21 21:09]** Updated filter logic in JS: toggles filter classes for live preview and captured images. No more direct style.filter assignment.
+-   **[2025-04-21 21:09]** Download All now downloads each image individually (no ZIP). Each polaroid is saved as a PNG with a unique filename.
+-   **[2025-04-21 21:09]** All gallery, filter, and capture features tested and verified to work on both desktop and mobile.
 
 ## Current Tasks
 -   None (all major features complete as of 2025-04-21 19:56)

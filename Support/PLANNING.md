@@ -79,6 +79,13 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 - Add interactive features (capture, effects, etc.)
 - Improve accessibility and add automated tests
 
+## Recent/Final Architecture & Major Features (2025-04-21)
+- 10 advanced polaroid filter effects, all visually rich and confined to the image preview area only.
+- Gallery modal: view, download (individually or all), and delete polaroids from browser cache.
+- Download All now saves each image as a separate PNG, not a ZIP.
+- Filter logic refactored to use CSS classes for maintainability and scalability.
+- All features tested on both desktop and mobile, with robust layout and scaling.
+
 ---
 
 This planning document reflects the current, finalized architecture for the Polaroid Camera project as of 2025-04-20.

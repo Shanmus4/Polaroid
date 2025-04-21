@@ -43,11 +43,11 @@ All controls are keyboard accessible. Images are stored in browser cache (localS
 2. Allow camera access for real-time preview.
 
 ## Recent Changes (2025-04-21)
-- Gallery grid system fully rewritten: uses CSS grid for desktop (auto-fit, minmax), always wraps to new rows, large images, fixed gap. Mobile grid is always 2 columns, responsive, never overflows.
-- Polaroid capture logic now guarantees the saved/downloaded image matches the live preview exactly, with correct cropping, no stretching, and includes the full white frame with thick bottom border.
-- All layout, scaling, and stacking bugs resolved for both camera and gallery views.
-- All CSS and JS files updated and thoroughly tested for mobile and desktop.
-- Camera flip button added to polaroid preview: Only shows on mobile devices with both cameras, always visible on iOS. Uses Material Design icon and translucent background. Tested on iPhone Chrome.
+- 10 advanced, visually rich polaroid filter effects (warm, cool, retro, vivid, sharp, B&W, night, glow, fade, none), all effects strictly confined to the image preview area.
+- Filter logic now uses CSS classes for all effects—no direct style.filter assignment.
+- Gallery modal: view, download (individually or all), and delete polaroids from browser cache.
+- Download All now saves each image as a separate PNG, not a ZIP.
+- All gallery, filter, and capture features tested and verified to work on both desktop and mobile.
 
 ## TODO / Roadmap
 - [x] Implement robust, responsive gallery grid (desktop: large images, wraps to new rows; mobile: always 2 columns).

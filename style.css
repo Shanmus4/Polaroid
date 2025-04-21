@@ -98,20 +98,111 @@ section.camera-frame-section {
   width: 237.6px; /* 3.3in at 72dpi */
   height: 273.6px; /* 3.8in at 72dpi */
   object-fit: cover !important;
-  border-radius: 4px;
-  background: #222;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px 0 #0004, 0 0px 0px 8px #fff inset;
+  background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.08) 100%);
+  display: block;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
 }
 
-/* You can add Polaroid filter styles here later */
-#camera-view.polaroid-filter {
-  /* Add Polaroid filter styles here later */
-  filter: sepia(50%) contrast(1.2) brightness(1.1) grayscale(20%);
+/* --- FILTERS --- */
+#camera-view.filter-warm,
+#camera-view.filter-cool,
+#camera-view.filter-retro,
+#camera-view.filter-vivid,
+#camera-view.filter-sharp,
+#camera-view.filter-bw,
+#camera-view.filter-night,
+#camera-view.filter-glow,
+#camera-view.filter-fade {
+  /* Remove any outer effects from box-shadow and background! */
+  box-shadow: none !important;
+  background: none !important;
 }
 
-.gallery-image {
-  object-fit: cover !important;
+#camera-view.filter-warm {
+  filter:
+    sepia(0.22)
+    hue-rotate(-14deg)
+    saturate(1.45)
+    brightness(1.11)
+    contrast(1.23)
+    blur(0.3px)
+    opacity(0.97);
+}
+#camera-view.filter-cool {
+  filter:
+    grayscale(0.19)
+    hue-rotate(40deg)
+    saturate(1.25)
+    brightness(1.07)
+    contrast(1.15)
+    blur(0.6px)
+    opacity(0.96);
+}
+#camera-view.filter-retro {
+  filter:
+    sepia(0.48)
+    hue-rotate(-48deg)
+    saturate(0.75)
+    brightness(1.02)
+    contrast(1.35)
+    blur(1.1px)
+    opacity(0.93);
+}
+#camera-view.filter-vivid {
+  filter:
+    saturate(2.25)
+    brightness(1.18)
+    contrast(1.36)
+    blur(0.4px)
+    opacity(0.98);
+}
+#camera-view.filter-sharp {
+  filter:
+    contrast(1.45)
+    brightness(1.09)
+    saturate(1.18)
+    blur(0.1px)
+    opacity(0.99);
+}
+#camera-view.filter-bw {
+  filter:
+    grayscale(1)
+    brightness(1.08)
+    contrast(1.25)
+    blur(0.2px)
+    opacity(0.98);
+}
+#camera-view.filter-night {
+  filter:
+    brightness(0.68)
+    contrast(1.32)
+    saturate(0.72)
+    hue-rotate(-16deg)
+    blur(0.4px)
+    opacity(0.95);
+}
+#camera-view.filter-glow {
+  filter:
+    brightness(1.22)
+    contrast(1.12)
+    saturate(1.45)
+    blur(0.6px)
+    opacity(0.97);
+}
+#camera-view.filter-fade {
+  filter:
+    grayscale(0.65)
+    brightness(1.18)
+    contrast(0.85)
+    blur(0.8px)
+    opacity(0.93);
+}
+#camera-view.filter-none {
+  filter: none;
 }
 
 .polaroid-arrow {
