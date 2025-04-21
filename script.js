@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     galleryGrid.innerHTML = '';
     if (!images.length) {
       galleryGrid.innerHTML = '<div class="gallery-grid-empty">No polaroids yet.</div>';
-      galleryDownloadAll.style.display = 'none';
+      showOrHideDownloadAll();
       return;
     }
     images.forEach((imgObj, idx) => {
@@ -415,9 +415,28 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(btnRow);
       galleryGrid.appendChild(container);
     });
-    galleryDownloadAll.style.display = '';
+    showOrHideDownloadAll();
   }
 
+  // Remove Download All button on iOS in gallery modal
+  function showOrHideDownloadAll() {
+    const galleryDownloadAll = document.getElementById('gallery-download-all');
+    if (!galleryDownloadAll) return;
+    if (window.isIOS && window.isIOS()) {
+      galleryDownloadAll.style.display = 'none';
+    } else {
+      galleryDownloadAll.style.display = '';
+    }
+  }
+
+  // Ensure this runs after DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showOrHideDownloadAll);
+  } else {
+    showOrHideDownloadAll();
+  }
+
+  // --- iOS-specific helpers are now on window ---
   // Download helpers
   function downloadImage(dataUrl, filename) {
     const a = document.createElement('a');
@@ -430,42 +449,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Download helper: bake filter into download
   async function downloadImageWithFilter(imgObj, filename) {
-    // Platform detection
-    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    // If not iOS, just download the original dataUrl (already has filter and frame)
-    if (!isiOS) {
-      downloadImage(imgObj.dataUrl, filename);
+    // Use dedicated iOS logic if on iOS
+    if (window.isIOS && window.isIOS()) {
+      await window.downloadPolaroidIOS(imgObj, filters, filename);
       return;
     }
-    // On iOS, re-render and apply the filter if needed
-    const img = new window.Image();
-    img.crossOrigin = 'anonymous';
-    img.src = imgObj.dataUrl;
-    await new Promise((resolve, reject) => {
-      img.onload = resolve;
-      img.onerror = reject;
-    });
-    const width = 259.2, height = 324, exportScale = 2;
-    const canvas = document.createElement('canvas');
-    canvas.width = Math.round(width * exportScale);
-    canvas.height = Math.round(height * exportScale);
-    const ctx = canvas.getContext('2d');
-    ctx.scale(exportScale, exportScale);
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, width, height);
-    const paddingLeft = 10.8, paddingTop = 10.8, paddingRight = 10.8;
-    const frameW = width - paddingLeft - paddingRight;
-    const frameH = 273.6;
-    // Apply filter if present
-    if (typeof imgObj.filterIndex !== 'undefined' && filters[imgObj.filterIndex] && filters[imgObj.filterIndex].css && 'filter' in ctx) {
-      ctx.filter = filters[imgObj.filterIndex].css;
-    } else {
-      ctx.filter = 'none';
-    }
-    ctx.drawImage(img, paddingLeft, paddingTop, frameW, frameH);
-    ctx.filter = 'none';
-    const dataUrl = canvas.toDataURL('image/png');
-    downloadImage(dataUrl, filename);
+    // For all other platforms, download original dataUrl
+    downloadImage(imgObj.dataUrl, filename);
   }
 
   function downloadAllImages() {

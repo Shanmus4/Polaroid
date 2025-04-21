@@ -8,9 +8,6 @@
 -   **[2025-04-20]** Create project documentation files (`PLANNING.md`, `TASK.md`, `README.md`). - DONE
 -   **[2025-04-20]** Implement live camera view and Polaroid filter toggle. - DONE
 -   **[2025-04-20]** Created GitHub repository and pushed all project files. Sensitive files are protected by .gitignore.
--   **[2025-04-20]** Enhanced camera preview UI and filter button: borders removed, rounded corners, soft shadow, animated modern filter button. All new styles in preview-enhanced.css.
--   **[2025-04-20]** Camera preview now scales perfectly to container. Filter button replaced by 5 live filter selectors below preview. Selecting a filter updates the main preview. All new logic and styles modular.
--   **[2025-04-20]** Overhauled layout: camera is now in a `.camera-parent` div, centered and scaled to 0.5x in the upper half; layout is top-down (camera above, preview below). - DONE
 -   Finalized a fully responsive Polaroid camera layout that scales proportionally on all screen sizes without element movement or squishing.
 -   Refactored both `style.css` and `cameracss.css` to use only aspect-ratio and percentage-based sizing for the camera, top, and bottom sections.
 -   Removed all unnecessary flexbox and transform scaling from the camera layout; scaling is now handled by width and aspect-ratio only.
@@ -22,7 +19,7 @@
 -   All UI elements remain visually aligned and centered at all breakpoints.
 -   Added interactive, Material Design filter navigation arrows with hover/focus effects.
 -   Implemented Polaroid photo capture: clicking the camera shutter saves the current preview (with white frame and filter) as a PNG in browser storage.
--   Added a floating action button (FAB) for downloading the latest captured Polaroid, styled per Material Design guidelines.
+-   Added a floating action button (FAB) for gallery access, styled per Material Design guidelines.
 -   Fixed skew/stretch and improved image quality for downloads: captured images now perfectly match the live preview and are high-resolution.
 -   **[2025-04-21]** Fixed gallery FAB (floating action button): now always fixed to the viewport, 24px from right/bottom, never overlaps camera/polaroid, robust to all layout/stacking bugs.
 -   **[2025-04-21]** Refactored layout and stacking context for robust Material Design compliance and correct FAB placement.
@@ -32,13 +29,12 @@
 -   **[2025-04-21]** Polaroid capture logic now guarantees the saved/downloaded image matches the live preview exactly, with correct cropping, no stretching, and includes the full white frame with thick bottom border.
 -   **[2025-04-21]** All layout, scaling, and stacking bugs resolved for both camera and gallery views.
 -   **[2025-04-21]** All CSS and JS files updated and thoroughly tested for mobile and desktop.
--   **[2025-04-21]** Start gallery feature: In-page modal gallery shows all captured polaroids from browser cache. Each image has individual download. Add "Download All" for ZIP. Modular, documented, and tested per project rules.
+-   **[2025-04-21]** Start gallery feature: In-page modal gallery shows all captured polaroids from browser cache. Each image has individual download and delete. "Download All" saves each image as a separate PNG (not ZIP); button is hidden on iOS.
 -   **[2025-04-21 18:27]** Added camera flip button to polaroid preview. Button is visible only on mobile devices with both cameras, and always on iOS. Uses Material icon with translucent background. Fully tested and working on iPhone Chrome.
--   **[2025-04-21 19:45]** Integrated CamanJS for advanced polaroid-style filters. Added 4 realistic film presets, live preview, and filter navigation. Filters applied to both preview and captured images. Fully integrated and ready for further custom presets.
--   **[2025-04-21 19:56]** Gallery modal now updates immediately when a new image is captured. Arrow keys and buttons switch filters for preview/capture. CamanJS setup verified.
+-   **[2025-04-21 19:56]** Gallery modal now updates immediately when a new image is captured. Arrow keys and buttons switch filters for preview/capture.
 -   **[2025-04-21 21:09]** Enhanced and expanded CSS filter system: 10 complex, visually rich polaroid filters (warm, cool, retro, vivid, sharp, B&W, night, glow, fade, none). All filter effects are now strictly confined to the image preview area—no leaks onto the frame or background.
 -   **[2025-04-21 21:09]** Updated filter logic in JS: toggles filter classes for live preview and captured images. No more direct style.filter assignment.
--   **[2025-04-21 21:09]** Download All now downloads each image individually (no ZIP). Each polaroid is saved as a PNG with a unique filename.
+-   **[2025-04-21 21:09]** Download All now downloads each image individually (no ZIP). Each polaroid is saved as a PNG with a unique filename. Hidden on iOS.
 -   **[2025-04-21 21:09]** All gallery, filter, and capture features tested and verified to work on both desktop and mobile.
 
 ## Current Tasks
@@ -54,4 +50,3 @@
 ## Discovered During Work
 -   The original CSS was messed up, so it was reverted.
 -   No major blockers. All layout and scaling issues have been addressed.
--   [2025-04-21 19:56] CamanJS file must be present and correct for all filter features to work. If filters do not apply, re-download caman.full.min.js from the official repo.

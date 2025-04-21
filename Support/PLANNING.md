@@ -7,8 +7,10 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 -   **HTML (`index.html`):** Provides the semantic structure for the camera components.
 -   **CSS (`cameracss.css`):** Handles all visual styling of the camera, aiming for a photorealistic look using gradients, shadows, and positioning. No CSS frameworks will be used.
 -   **CSS (`style.css`):** Handles the layout of the page and the Polaroid filter.
--   **CSS (`preview-enhanced.css`):** Contains UI enhancements made on April 20, 2025.
--   **JavaScript (`script.js`):** Adds interactivity to camera elements (e.g., shutter button click, animations) and camera access. Keep JS vanilla (no external libraries unless absolutely necessary).
+-   **CSS (`gallery.css`):** Gallery modal and grid styling.
+-   **JavaScript (`script.js`):** Adds interactivity to camera elements (e.g., shutter button click, animations), camera access, filter, and gallery logic. Keep JS vanilla (no external libraries unless absolutely necessary).
+-   **JavaScript (`ios.js`):** iOS detection and download logic.
+-   **CSS (`ios.css`):** iOS-specific CSS overrides (currently a placeholder).
 
 ## Project Architecture & Layout Decisions
 
@@ -49,7 +51,6 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 - Gallery FAB (floating action button) is now a direct child of <body>, always fixed 24px from the bottom-right of the viewport, never overlaps the polaroid or camera.
 - Layout and stacking context bugs fully resolved: FAB is never affected by flexbox or absolute parents.
 - Camera and polaroid always maintain proportional scaling and spacing, with robust gap and padding logic.
-- Download logic removed from FAB; it is now a gallery stub for future features.
 - All layout, spacing, and stacking context issues addressed for desktop and mobile.
 - All files and fixes are now tracked and synced on GitHub.
 - **Gallery grid system completely rewritten for 2025-04-21:** Uses CSS grid for desktop (auto-fit, minmax), always wraps to new rows, large images, fixed gap. Mobile grid is always 2 columns, responsive, never overflows.
@@ -58,8 +59,8 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 
 ## Gallery Modal (2025-04-21)
 - Gallery opens as a modal/overlay on FAB click, displaying all images saved in browser cache (localStorage).
-- Each image is shown in a grid with its own download button.
-- A "Download All" button allows downloading all images as a ZIP.
+- Each image is shown in a grid with its own download button and delete button.
+- A "Download All" button allows downloading all images as separate PNGs (not ZIP). This button is hidden on iOS.
 - Gallery can be closed via an X button or clicking outside.
 - All UI/logic is modular and testable.
 - Tests and documentation updated for this feature.
@@ -78,14 +79,17 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 ## Future Enhancements
 - Add interactive features (capture, effects, etc.)
 - Improve accessibility and add automated tests
+- Implement photo printing animation triggered by shutter click
+- Add interactivity to other camera elements (e.g., flash toggle, power button)
+- Refine existing animations and styles
 
 ## Recent/Final Architecture & Major Features (2025-04-21)
-- 10 advanced polaroid filter effects, all visually rich and confined to the image preview area only.
-- Gallery modal: view, download (individually or all), and delete polaroids from browser cache.
-- Download All now saves each image as a separate PNG, not a ZIP.
-- Filter logic refactored to use CSS classes for maintainability and scalability.
-- All features tested on both desktop and mobile, with robust layout and scaling.
+- 10 advanced polaroid filter effects, all visually rich and confined to the image preview area only (all CSS-based)
+- Gallery modal: view, download (individually), and delete polaroids from browser cache
+- Download All saves each image as a separate PNG (not ZIP); hidden on iOS
+- Filter logic refactored to use CSS classes for maintainability and scalability
+- All features tested on both desktop and mobile, with robust layout and scaling
 
 ---
 
-This planning document reflects the current, finalized architecture for the Polaroid Camera project as of 2025-04-20.
+This planning document reflects the current, finalized architecture for the Polaroid Camera project as of 2025-04-21.
