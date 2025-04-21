@@ -9,86 +9,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const fabDownload = document.getElementById('fab-download');
   const polaroidCaptureArea = document.getElementById('polaroid-capture-area');
   const filters = [
-    {
-      name: 'None',
-      css: ''
-    },
-    {
-      name: 'Warm',
-      css: 'hue-rotate(-10deg) saturate(1.25) brightness(1.08) contrast(1.10)'
-    },
-    {
-      name: 'Cool',
-      css: 'hue-rotate(30deg) saturate(1.2) brightness(1.05) contrast(1.08)'
-    },
-    {
-      name: 'Retro',
-      css: 'hue-rotate(-35deg) saturate(0.8) brightness(1.05) contrast(1.18) sepia(0.18)'
-    },
-    {
-      name: 'Vivid',
-      css: 'saturate(1.7) brightness(1.12) contrast(1.22)'
-    },
-    {
-      name: 'Sharp',
-      css: ''
-    },
-    {
-      name: 'B&W',
-      css: ''
-    },
-    {
-      name: 'Night',
-      css: ''
-    },
-    {
-      name: 'Glow',
-      css: ''
-    },
-    {
-      name: 'Fade',
-      css: ''
-    }
+    { name: 'None', css: 'none' },
+    { name: 'Warm', css: 'sepia(0.22) hue-rotate(-14deg) saturate(1.45) brightness(1.11) contrast(1.23)' },
+    { name: 'Cool', css: 'grayscale(0.19) hue-rotate(40deg) saturate(1.25) brightness(1.07) contrast(1.15)' },
+    { name: 'Retro', css: 'sepia(0.48) hue-rotate(-48deg) saturate(0.75) brightness(1.02) contrast(1.35)' },
+    { name: 'Vivid', css: 'saturate(2.25) brightness(1.18) contrast(1.36)' },
+    { name: 'Sharp', css: 'contrast(1.45) brightness(1.09) saturate(1.18)' },
+    { name: 'B&W', css: 'grayscale(1) brightness(1.08) contrast(1.25)' },
+    { name: 'Night', css: 'brightness(0.68) contrast(1.32) saturate(0.72) hue-rotate(-16deg)' },
+    { name: 'Glow', css: 'brightness(1.22) contrast(1.12) saturate(1.45)' },
+    { name: 'Fade', css: 'grayscale(0.65) brightness(1.18) contrast(0.85)' }
   ];
   let filterIndex = 0;
 
   // Store captured images as data URLs in localStorage
   let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
 
+  // Helper: returns the filter class name for a given filter index
+  function getFilterClass(idx) {
+    return 'filter-' + filters[idx].name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
   function updateFilter() {
-    // Remove all filter-* classes
-    cameraView.classList.remove('filter-none', 'filter-warm', 'filter-cool', 'filter-retro', 'filter-vivid', 'filter-sharp', 'filter-bw', 'filter-night', 'filter-glow', 'filter-fade');
-    // Add the selected filter class
-    const classMap = ['filter-none', 'filter-warm', 'filter-cool', 'filter-retro', 'filter-vivid', 'filter-sharp', 'filter-bw', 'filter-night', 'filter-glow', 'filter-fade'];
-    cameraView.classList.add(classMap[filterIndex]);
+    if (filters[filterIndex].css) {
+      cameraView.style.filter = filters[filterIndex].css;
+    } else {
+      cameraView.style.filter = '';
+    }
     cameraView.setAttribute('aria-label', filters[filterIndex].name + ' filter');
   }
 
   // Helper: capture polaroid as image (with white border)
   async function capturePolaroid() {
     const video = cameraView;
-    const polaroidDiv = polaroidCaptureArea;
-    // Outer polaroid size (matches .polaroid-white CSS):
-    const width = 259.2; // px
-    const height = 324;  // px
-    const dpr = Math.max(window.devicePixelRatio, 2);
+    const width = 259.2;
+    const height = 324;
     const exportScale = 2;
     const canvas = document.createElement('canvas');
     canvas.width = Math.round(width * exportScale);
     canvas.height = Math.round(height * exportScale);
     const ctx = canvas.getContext('2d');
     ctx.scale(exportScale, exportScale);
-    // Draw white background for full polaroid (including thick bottom border)
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, width, height);
-    // Padding matches .polaroid-white: 10.8px left/right/top, 0px bottom
     const paddingLeft = 10.8;
     const paddingTop = 10.8;
     const paddingRight = 10.8;
-    // The bottom border is the remaining space
     const frameW = width - paddingLeft - paddingRight;
-    const frameH = 273.6; // matches #camera-view height
-    // Calculate the crop area in the video based on the frame aspect ratio and object-fit: cover
+    const frameH = 273.6;
     const videoEl = video;
     const videoWidth = videoEl.videoWidth;
     const videoHeight = videoEl.videoHeight;
@@ -106,19 +74,31 @@ document.addEventListener('DOMContentLoaded', () => {
       sx = 0;
       sy = (videoHeight - sh) / 2;
     }
-    // Draw the cropped video into the frame area (with correct padding, leaving thick white bottom)
-    ctx.filter = getComputedStyle(videoEl).filter;
-    ctx.drawImage(
-      videoEl,
-      sx, sy, sw, sh,
-      paddingLeft, paddingTop, frameW, frameH
-    );
-    // Save as data URL
-    const dataUrl = canvas.toDataURL('image/png');
-    let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
-    polaroidImages.push(dataUrl);
-    localStorage.setItem('polaroidImages', JSON.stringify(polaroidImages));
-    return dataUrl;
+    // Platform detection
+    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    let dataUrl;
+    if (!isiOS) {
+      // Desktop/Android: bake in filter
+      let filterString = getComputedStyle(videoEl).filter;
+      if ('filter' in ctx && filterString && filterString !== 'none') {
+        ctx.filter = filterString;
+      }
+      ctx.drawImage(videoEl, sx, sy, sw, sh, paddingLeft, paddingTop, frameW, frameH);
+      ctx.filter = 'none';
+      dataUrl = canvas.toDataURL('image/png');
+      let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
+      polaroidImages.push({ dataUrl, filterIndex });
+      localStorage.setItem('polaroidImages', JSON.stringify(polaroidImages));
+      return dataUrl;
+    } else {
+      // iOS: save unfiltered image + filterIndex
+      ctx.drawImage(videoEl, sx, sy, sw, sh, paddingLeft, paddingTop, frameW, frameH);
+      dataUrl = canvas.toDataURL('image/png');
+      let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
+      polaroidImages.push({ dataUrl, filterIndex });
+      localStorage.setItem('polaroidImages', JSON.stringify(polaroidImages));
+      return dataUrl;
+    }
   }
 
   function scaleCameraToFit() {
@@ -320,9 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.getGalleryImages = function getGalleryImages() {
     return JSON.parse(localStorage.getItem('polaroidImages') || '[]');
   };
-  window.addGalleryImage = function addGalleryImage(img) {
+  window.addGalleryImage = function addGalleryImage(imgObj) {
     let imgs = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
-    imgs.push(img);
+    imgs.push(imgObj);
     localStorage.setItem('polaroidImages', JSON.stringify(imgs));
   };
   window.removeGalleryImage = function removeGalleryImage(index) {
@@ -337,20 +317,45 @@ document.addEventListener('DOMContentLoaded', () => {
   const galleryClose = document.querySelector('.gallery-close');
   const galleryDownloadAll = document.getElementById('gallery-download-all');
 
-  function openGallery() {
+  // --- GALLERY MODAL ANIMATION LOGIC ---
+  // Add animation classes for smooth open/close
+  function animateOpenGallery() {
     renderGallery();
+    // Always clear animation classes first
+    galleryModal.classList.remove('gallery-modal--open', 'gallery-modal--close');
     galleryModal.style.display = 'flex';
+    // Force reflow to ensure transition
+    void galleryModal.offsetWidth;
     galleryModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('gallery-open');
-    galleryModal.focus();
+    // Add open class in next animation frame for transition
+    requestAnimationFrame(() => {
+      galleryModal.classList.add('gallery-modal--open');
+      galleryModal.focus();
+    });
   }
-  function closeGallery() {
-    galleryModal.style.display = 'none';
-    galleryModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    document.body.classList.remove('gallery-open');
+  function animateCloseGallery() {
+    // Only close if open
+    if (!galleryModal.classList.contains('gallery-modal--open')) return;
+    galleryModal.classList.remove('gallery-modal--open');
+    galleryModal.classList.add('gallery-modal--close');
+    // Remove any previous handler, then add
+    galleryModal.removeEventListener('transitionend', galleryModal._closeHandler);
+    galleryModal._closeHandler = function handler(e) {
+      if (e.target === galleryModal) {
+        galleryModal.style.display = 'none';
+        galleryModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        document.body.classList.remove('gallery-open');
+        galleryModal.removeEventListener('transitionend', galleryModal._closeHandler);
+      }
+    };
+    galleryModal.addEventListener('transitionend', galleryModal._closeHandler);
   }
+  // Replace openGallery/closeGallery with animated versions
+  function openGallery() { animateOpenGallery(); }
+  function closeGallery() { animateCloseGallery(); }
 
   if (galleryClose) {
     galleryClose.addEventListener('click', closeGallery);
@@ -373,13 +378,19 @@ document.addEventListener('DOMContentLoaded', () => {
       galleryDownloadAll.style.display = 'none';
       return;
     }
-    images.forEach((img, idx) => {
+    images.forEach((imgObj, idx) => {
       const container = document.createElement('div');
       container.className = 'gallery-image-container';
       const image = document.createElement('img');
       image.className = 'gallery-image';
-      image.src = img;
+      image.src = imgObj.dataUrl;
       image.alt = `Polaroid ${idx+1}`;
+      // Apply filter visually in gallery (iOS workaround)
+      if (typeof imgObj.filterIndex !== 'undefined' && filters[imgObj.filterIndex] && filters[imgObj.filterIndex].css) {
+        image.style.filter = filters[imgObj.filterIndex].css;
+      } else {
+        image.style.filter = '';
+      }
       // Button row (right aligned)
       const btnRow = document.createElement('div');
       btnRow.className = 'gallery-btn-row';
@@ -388,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
       downloadBtn.className = 'gallery-download-btn';
       downloadBtn.title = 'Download';
       downloadBtn.innerHTML = '<span class="material-symbols-outlined">download</span>';
-      downloadBtn.addEventListener('click', () => downloadImage(img, `polaroid-${idx+1}.png`));
+      downloadBtn.addEventListener('click', () => downloadImageWithFilter(imgObj, `polaroid-${idx+1}.png`));
       // Delete button
       const deleteBtn = document.createElement('button');
       deleteBtn.className = 'gallery-delete-btn';
@@ -417,11 +428,43 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.removeChild(a);
   }
 
+  // Download helper: bake filter into download
+  async function downloadImageWithFilter(imgObj, filename) {
+    const img = new window.Image();
+    img.crossOrigin = 'anonymous';
+    img.src = imgObj.dataUrl;
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+    const width = 259.2, height = 324, exportScale = 2;
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(width * exportScale);
+    canvas.height = Math.round(height * exportScale);
+    const ctx = canvas.getContext('2d');
+    ctx.scale(exportScale, exportScale);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, width, height);
+    const paddingLeft = 10.8, paddingTop = 10.8, paddingRight = 10.8;
+    const frameW = width - paddingLeft - paddingRight;
+    const frameH = 273.6;
+    // Apply filter if present
+    if (typeof imgObj.filterIndex !== 'undefined' && filters[imgObj.filterIndex] && filters[imgObj.filterIndex].css && 'filter' in ctx) {
+      ctx.filter = filters[imgObj.filterIndex].css;
+    } else {
+      ctx.filter = 'none';
+    }
+    ctx.drawImage(img, paddingLeft, paddingTop, frameW, frameH);
+    ctx.filter = 'none';
+    const dataUrl = canvas.toDataURL('image/png');
+    downloadImage(dataUrl, filename);
+  }
+
   function downloadAllImages() {
     const images = window.getGalleryImages();
     if (!images.length) return;
-    images.forEach((img, i) => {
-      downloadImage(img, `polaroid-${i+1}.png`);
+    images.forEach((imgObj, i) => {
+      downloadImageWithFilter(imgObj, `polaroid-${i+1}.png`);
     });
   }
   if (galleryDownloadAll) {

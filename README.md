@@ -65,7 +65,7 @@ For more details, see `Support/TASK.md` and `Support/PLANNING.md`.
 
 ## GitHub Repository
 
-This project is now available on GitHub: [Polaroid Camera](https://github.com/Shanmus4/Polaroid-Camera)
+This project is now available on GitHub: [Polaroid](https://github.com/Shanmus4/Polaroid)
 
 ### Sensitive Files
 Sensitive files such as `.windsurfrules` and any future API keys/secrets are protected by the `.gitignore` file and will not be uploaded to the repository.
