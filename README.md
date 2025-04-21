@@ -47,6 +47,7 @@ All controls are keyboard accessible. Images are stored in browser cache (localS
 - Polaroid capture logic now guarantees the saved/downloaded image matches the live preview exactly, with correct cropping, no stretching, and includes the full white frame with thick bottom border.
 - All layout, scaling, and stacking bugs resolved for both camera and gallery views.
 - All CSS and JS files updated and thoroughly tested for mobile and desktop.
+- Camera flip button added to polaroid preview: Only shows on mobile devices with both cameras, always visible on iOS. Uses Material Design icon and translucent background. Tested on iPhone Chrome.
 
 ## TODO / Roadmap
 - [x] Implement robust, responsive gallery grid (desktop: large images, wraps to new rows; mobile: always 2 columns).

@@ -33,6 +33,7 @@
 -   **[2025-04-21]** All layout, scaling, and stacking bugs resolved for both camera and gallery views.
 -   **[2025-04-21]** All CSS and JS files updated and thoroughly tested for mobile and desktop.
 -   **[2025-04-21]** Start gallery feature: In-page modal gallery shows all captured polaroids from browser cache. Each image has individual download. Add "Download All" for ZIP. Modular, documented, and tested per project rules.
+-   **[2025-04-21 18:27]** Added camera flip button to polaroid preview. Button is visible only on mobile devices with both cameras, and always on iOS. Uses Material icon with translucent background. Fully tested and working on iPhone Chrome.
 
 ## Current Tasks
 -   None (all major features complete as of 2025-04-21 18:10)

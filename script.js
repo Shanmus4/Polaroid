@@ -128,16 +128,90 @@ document.addEventListener('DOMContentLoaded', () => {
     polaroid.style.transform = 'translateX(-50%)';
   }
 
+  // Camera flip support
+  let currentFacingMode = 'user';
+  let hasFrontBackCamera = false;
+
+  function isMobileDevice() {
+    // Use matchMedia for touch/mobile detection as well as userAgent fallback
+    return (
+      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    );
+  }
+
+  // Check for multiple cameras and show flip button if available -- only on mobile
+  async function checkCameraFlipSupport() {
+    const flipBtn = document.getElementById('camera-flip-btn');
+    // iOS browsers (including Chrome) do not expose enumerateDevices until getUserMedia is called and permission granted
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      // On iOS, always show the flip button (since enumerateDevices is unreliable, but most iPhones/iPads have both cameras)
+      if (flipBtn) flipBtn.style.display = '';
+      hasFrontBackCamera = true;
+      return;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return;
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoInputs = devices.filter(d => d.kind === 'videoinput');
+    if (videoInputs.length > 1 && isMobileDevice()) {
+      hasFrontBackCamera = true;
+      if (flipBtn) flipBtn.style.display = '';
+    } else {
+      hasFrontBackCamera = false;
+      if (flipBtn) flipBtn.style.display = 'none';
+    }
+  }
+
+  // Flip camera logic
+  async function flipCamera() {
+    currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+    await startCamera(currentFacingMode);
+  }
+
+  // Mirror effect for user (front) camera
+  function updateCameraMirror() {
+    const video = document.getElementById('camera-view');
+    if (currentFacingMode === 'user') {
+      video.style.transform = 'scaleX(-1)';
+    } else {
+      video.style.transform = '';
+    }
+  }
+
+  // Update startCamera to accept facingMode
+  async function startCamera(facingMode = 'user') {
+    const constraints = {
+      video: {
+        facingMode: { exact: facingMode }
+      },
+      audio: false
+    };
+    const video = document.getElementById('camera-view');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      video.srcObject = stream;
+      video.play();
+      updateCameraMirror();
+    } catch (e) {
+      // fallback: try without facingMode constraint
+      try {
+        const fallbackStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        video.srcObject = fallbackStream;
+        video.play();
+        updateCameraMirror();
+      } catch (err) {
+        alert('Unable to access camera.');
+      }
+    }
+  }
+
+  // Ensure camera starts on load
+  startCamera();
+
   // Access the camera
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function (stream) {
-        // Set the video source to the stream
-        cameraView.srcObject = stream;
-      })
-      .catch(function (error) {
-        console.error('Unable to access camera:', error);
-      });
+    // startCamera() is called above
   } else {
     console.error('getUserMedia() not supported.');
   }
@@ -199,6 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Also call after camera scaling (if any)
   if (typeof scaleCameraToFit === 'function') {
     window.addEventListener('resize', () => setTimeout(positionPolaroidBelowCamera, 10));
+  }
+
+  checkCameraFlipSupport();
+  const flipBtn = document.getElementById('camera-flip-btn');
+  if (flipBtn) {
+    flipBtn.addEventListener('click', flipCamera);
   }
 
   // --- GALLERY LOGIC ---
