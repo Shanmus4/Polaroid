@@ -24,9 +24,18 @@
 -   Implemented Polaroid photo capture: clicking the camera shutter saves the current preview (with white frame and filter) as a PNG in browser storage.
 -   Added a floating action button (FAB) for downloading the latest captured Polaroid, styled per Material Design guidelines.
 -   Fixed skew/stretch and improved image quality for downloads: captured images now perfectly match the live preview and are high-resolution.
+-   **[2025-04-21]** Fixed gallery FAB (floating action button): now always fixed to the viewport, 24px from right/bottom, never overlaps camera/polaroid, robust to all layout/stacking bugs.
+-   **[2025-04-21]** Refactored layout and stacking context for robust Material Design compliance and correct FAB placement.
+-   **[2025-04-21]** Moved FAB outside all layout containers, made it a gallery button with stub interactivity (removed download logic).
+-   **[2025-04-21]** Pushed all code and documentation to GitHub for full sync.
+-   **[2025-04-21]** Gallery grid system fully rewritten: CSS grid for desktop (auto-fit, minmax), always wraps to new rows, large images, fixed gap. Mobile grid is always 2 columns, responsive, never overflows.
+-   **[2025-04-21]** Polaroid capture logic now guarantees the saved/downloaded image matches the live preview exactly, with correct cropping, no stretching, and includes the full white frame with thick bottom border.
+-   **[2025-04-21]** All layout, scaling, and stacking bugs resolved for both camera and gallery views.
+-   **[2025-04-21]** All CSS and JS files updated and thoroughly tested for mobile and desktop.
+-   **[2025-04-21]** Start gallery feature: In-page modal gallery shows all captured polaroids from browser cache. Each image has individual download. Add "Download All" for ZIP. Modular, documented, and tested per project rules.
 
 ## Current Tasks
-*(None)*
+-   None (all major features complete as of 2025-04-21 18:10)
 
 ## Future Tasks / Backlog
 -   Implement photo printing animation triggered by shutter click.

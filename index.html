@@ -8,53 +8,80 @@
     
     <link rel="stylesheet" href="cameracss.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="gallery.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <script src="script.js" defer></script>
   </head>  
   <body>
     <div class="main-flex-layout">
-      <div class="camera-parent">
-        <div class="camera" aria-label="Photorealistic illustration of a Polaroid camera">
-          <div class="top">
-            <div class="flash"></div>
-            <div class="timer"></div>
-            <div class="sensor"></div>
-            <div class="lens"><div class="glass"></div></div>
-            <div class="shutter"></div>
-            <div class="viewfinder"><div class="glass"><div class="back"></div></div></div>
-            <div class="toggle-container"><div class="toggle"></div></div>
-            <div class="power"></div>
-            <div class="title"></div>
-          </div>
-          <div class="bottom">
-            <div class="toggle-container"><div class="toggle"><div class="handle"></div></div></div>
-            <div class="printer">
-            </div>
-            <div class="labels">
-              <div class="rainbow"></div>
-              <div class="logo">Polaroid</div>
-              <div class="type"></div>
+      <div class="camera-polaroid-stack">
+        <div class="camera-parent">
+          <div class="camera-scale-wrapper">
+            <div class="camera" aria-label="Photorealistic illustration of a Polaroid camera">
+              <div class="top">
+                <div class="flash"></div>
+                <div class="timer"></div>
+                <div class="sensor"></div>
+                <div class="lens"><div class="glass"></div></div>
+                <div class="shutter"></div>
+                <div class="viewfinder"><div class="glass"><div class="back"></div></div></div>
+                <div class="toggle-container"><div class="toggle"></div></div>
+                <div class="power"></div>
+                <div class="title"></div>
+              </div>
+              <div class="bottom">
+                <div class="toggle-container"><div class="toggle"><div class="handle"></div></div></div>
+                <div class="printer">
+                </div>
+                <div class="labels">
+                  <div class="rainbow"></div>
+                  <div class="logo">Polaroid</div>
+                  <div class="type"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="polaroid-parent">
-        <button class="polaroid-arrow polaroid-arrow-left" tabindex="0" aria-label="Previous filter" type="button">
-          <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
-        </button>
-        <div class="polaroid-preview-container">
-          <div class="polaroid-white" id="polaroid-capture-area">
-            <video id="camera-view" autoplay playsinline></video>
+        <div class="polaroid-parent">
+          <button class="polaroid-arrow polaroid-arrow-left" tabindex="0" aria-label="Previous filter" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+          </button>
+          <div class="polaroid-preview-container">
+            <div class="polaroid-white" id="polaroid-capture-area">
+              <video id="camera-view" autoplay playsinline></video>
+            </div>
           </div>
+          <button class="polaroid-arrow polaroid-arrow-right" tabindex="0" aria-label="Next filter" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
         </div>
-        <button class="polaroid-arrow polaroid-arrow-right" tabindex="0" aria-label="Next filter" type="button">
-          <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-        </button>
-        <button id="fab-download" aria-label="Download captured Polaroid" class="fab-download" type="button">
-          <span class="material-symbols-outlined" aria-hidden="true">download</span>
-        </button>
       </div>
     </div>
-
+    <!-- Gallery Modal (full page, improved UX, new layout) -->
+    <div id="gallery-modal" class="gallery-modal" tabindex="-1" aria-modal="true" aria-hidden="true" style="display:none;">
+      <div class="gallery-content" role="dialog" aria-label="Gallery">
+        <div class="gallery-row gallery-row-header">
+          <h2 class="gallery-title">Gallery</h2>
+          <button class="gallery-close" aria-label="Close gallery" type="button" style="border: none;">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </div>
+        <div class="gallery-row gallery-row-download">
+          <div style="flex:1;"></div>
+          <button class="gallery-download-all md-primary-btn" id="gallery-download-all" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">download</span> Download All
+          </button>
+        </div>
+        <div class="gallery-row gallery-row-images">
+          <div class="gallery-grid" id="gallery-grid"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Move FAB outside polaroid-parent for global screen positioning -->
+    <!-- FAB is now outside all layout containers for true viewport positioning -->
+    <button id="fab-download" aria-label="Open gallery" class="fab-download" type="button">
+      <span class="material-symbols-outlined" aria-hidden="true">photo_library</span>
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>

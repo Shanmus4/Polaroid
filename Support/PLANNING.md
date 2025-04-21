@@ -45,24 +45,24 @@ Create a visually appealing and interactive simulation of a Polaroid camera usin
 -   **JavaScript:** Use modern JS features (ES6+). Add comments for complex logic. Ensure code is modular where possible.
 -   **File Structure:** Maintain a flat structure for now (`index.html`, `style.css`, `script.js` in the root).
 
-## UI Enhancements (2025-04-20)
-- Camera is now wrapped in `.camera-parent` (50vh height), centered and scaled to 0.5x for a modern, responsive look.
-- Layout is top-down: camera in upper half, preview in lower half, both centered.
-- All layout/scaling changes are in `index.html` and `style.css` (no changes to cameracss.css).
-- Camera preview now scales edge-to-edge with rounded corners and shadow.
-- Filter button replaced by 5 live filter selectors below preview, each showing a mini live preview.
-- Selecting a filter updates the main preview instantly.
-- All enhancements are in `preview-enhanced.css` and JS.
+## UI Enhancements (2025-04-21)
+- Gallery FAB (floating action button) is now a direct child of <body>, always fixed 24px from the bottom-right of the viewport, never overlaps the polaroid or camera.
+- Layout and stacking context bugs fully resolved: FAB is never affected by flexbox or absolute parents.
+- Camera and polaroid always maintain proportional scaling and spacing, with robust gap and padding logic.
+- Download logic removed from FAB; it is now a gallery stub for future features.
+- All layout, spacing, and stacking context issues addressed for desktop and mobile.
+- All files and fixes are now tracked and synced on GitHub.
+- **Gallery grid system completely rewritten for 2025-04-21:** Uses CSS grid for desktop (auto-fit, minmax), always wraps to new rows, large images, fixed gap. Mobile grid is always 2 columns, responsive, never overflows.
+- **Polaroid capture logic now matches live preview exactly, with correct cropping, no stretching, and includes the full white frame with thick bottom border.**
+- **All CSS and JS files updated and thoroughly tested for mobile and desktop.**
 
-## Polaroid Capture & Download
-- When the camera shutter is clicked, the current polaroid (with white frame and filter) is captured using a canvas, matching the live preview exactly (including padding and filter).
-- Captured images are stored as PNG data URLs in localStorage for persistent access.
-- A floating action button (FAB) allows users to download the latest captured image. The FAB is styled per Material Design 3 and is always positioned 20px from the bottom right of the preview area.
-- The image quality is preserved using devicePixelRatio and CSS padding for correct placement—no more skew or stretch.
-
-## Filter Navigation
-- Left/right arrows use Material Symbols Outlined chevrons with tactile hover/focus effects.
-- All filter and capture controls are keyboard accessible.
+## Gallery Modal (2025-04-21)
+- Gallery opens as a modal/overlay on FAB click, displaying all images saved in browser cache (localStorage).
+- Each image is shown in a grid with its own download button.
+- A "Download All" button allows downloading all images as a ZIP.
+- Gallery can be closed via an X button or clicking outside.
+- All UI/logic is modular and testable.
+- Tests and documentation updated for this feature.
 
 ## Version Control
 
