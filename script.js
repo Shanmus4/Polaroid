@@ -82,19 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return dataUrl;
   }
 
-  function scaleCameraToFit() {
-    const wrapper = document.querySelector('.camera-scale-wrapper');
-    const parent = document.querySelector('.camera-parent');
-    const naturalWidth = 570;
-    const naturalHeight = 470;
-    const availableHeight = parent.clientHeight;
-    const availableWidth = parent.clientWidth;
-    const scaleH = availableHeight / naturalHeight;
-    const scaleW = availableWidth / naturalWidth;
-    const scale = Math.min(scaleH, scaleW, 1); // Never scale above 1
-    wrapper.style.transform = `scale(${scale})`;
-  }
-
   // Access the camera
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -152,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // FAB download: download the latest saved polaroid
   if (fabDownload) {
     fabDownload.addEventListener('click', () => {
       if (!polaroidImages.length) return;
@@ -166,6 +154,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateFilter();
-  scaleCameraToFit();
-  window.addEventListener('resize', scaleCameraToFit);
 });
