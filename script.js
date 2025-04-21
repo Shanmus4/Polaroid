@@ -74,31 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
       sx = 0;
       sy = (videoHeight - sh) / 2;
     }
-    // Platform detection
-    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    let dataUrl;
-    if (!isiOS) {
-      // Desktop/Android: bake in filter
-      let filterString = getComputedStyle(videoEl).filter;
-      if ('filter' in ctx && filterString && filterString !== 'none') {
-        ctx.filter = filterString;
-      }
-      ctx.drawImage(videoEl, sx, sy, sw, sh, paddingLeft, paddingTop, frameW, frameH);
-      ctx.filter = 'none';
-      dataUrl = canvas.toDataURL('image/png');
-      let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
-      polaroidImages.push({ dataUrl, filterIndex });
-      localStorage.setItem('polaroidImages', JSON.stringify(polaroidImages));
-      return dataUrl;
-    } else {
-      // iOS: save unfiltered image + filterIndex
-      ctx.drawImage(videoEl, sx, sy, sw, sh, paddingLeft, paddingTop, frameW, frameH);
-      dataUrl = canvas.toDataURL('image/png');
-      let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
-      polaroidImages.push({ dataUrl, filterIndex });
-      localStorage.setItem('polaroidImages', JSON.stringify(polaroidImages));
-      return dataUrl;
-    }
+    // Restore dynamic filter string from computed style
+    let filterString = getComputedStyle(videoEl).filter;
+    ctx.filter = (filterString && filterString !== 'none') ? filterString : 'none';
+    ctx.drawImage(videoEl, sx, sy, sw, sh, paddingLeft, paddingTop, frameW, frameH);
+    ctx.filter = 'none';
+    let dataUrl = canvas.toDataURL('image/png');
+    let polaroidImages = JSON.parse(localStorage.getItem('polaroidImages') || '[]');
+    polaroidImages.push({ dataUrl, filterIndex });
+    localStorage.setItem('polaroidImages', JSON.stringify(polaroidImages));
+    return dataUrl;
   }
 
   function scaleCameraToFit() {
